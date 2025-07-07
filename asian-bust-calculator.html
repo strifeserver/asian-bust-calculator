@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Body Size Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+    }
+    .section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      margin: 20px auto;
+      max-width: 500px;
+    }
+    label {
+      display: block;
+      margin-top: 12px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 6px;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Body Size Calculator (cm)</h1>
+
+  <!-- Bust Size Calculator -->
+  <div class="section">
+    <h2>Bust Size Calculator</h2>
+    <label>Upper Chest Size (cm):</label>
+    <input type="number" id="upperChest" placeholder="e.g. 86" />
+
+    <label>Under Bust Size (cm):</label>
+    <input type="number" id="underBust" placeholder="e.g. 72" />
+
+    <button onclick="calculateBustSize()">Calculate Bust Size</button>
+    <div class="result" id="bustResult"></div>
+  </div>
+
+  <!-- Panty Size Calculator -->
+  <div class="section">
+    <h2>Panty Size Calculator</h2>
+    <label>Waist Size (cm):</label>
+    <input type="number" id="waistSize" placeholder="e.g. 70" />
+
+    <label>Hip Size (cm):</label>
+    <input type="number" id="pantyHipSize" placeholder="e.g. 94" />
+
+    <button onclick="calculatePantySize()">Calculate Panty Size</button>
+    <div class="result" id="pantyResult"></div>
+  </div>
+
+  <!-- Underwear Size Calculator -->
+  <div class="section">
+    <h2>Underwear Size Calculator</h2>
+    <label>Hip Size (cm):</label>
+    <input type="number" id="underwearHipSize" placeholder="e.g. 95" />
+
+    <button onclick="calculateUnderwearSize()">Calculate Underwear Size</button>
+    <div class="result" id="underwearResult"></div>
+  </div>
+
+  <script>
+    function calculateBustSize() {
+      const upper = parseFloat(document.getElementById('upperChest').value);
+      const under = parseFloat(document.getElementById('underBust').value);
+
+      if (isNaN(upper) || isNaN(under)) {
+        document.getElementById('bustResult').innerText = "Please enter both values.";
+        return;
+      }
+
+      const diff = upper - under;
+      let cup = "";
+
+      if (diff < 8.75) cup = "AA";
+      else if (diff < 11.25) cup = "A";
+      else if (diff < 13.75) cup = "B";
+      else if (diff < 16.25) cup = "C";
+      else if (diff < 18.75) cup = "D";
+      else if (diff < 21.25) cup = "E";
+      else if (diff < 23.75) cup = "F";
+      else if (diff < 26.25) cup = "G";
+      else if (diff < 28.75) cup = "H";
+      else cup = "I or above";
+
+      const band = Math.round(under / 5) * 5;
+
+      document.getElementById('bustResult').innerText = `Estimated Bra Size: ${cup}${band}`;
+    }
+
+    function calculatePantySize() {
+      const waist = parseFloat(document.getElementById('waistSize').value);
+      const hips = parseFloat(document.getElementById('pantyHipSize').value);
+
+      if (isNaN(waist) || isNaN(hips)) {
+        document.getElementById('pantyResult').innerText = "Please enter both values.";
+        return;
+      }
+
+      let size = "";
+
+      if (waist <= 63 && hips <= 88) size = "XS";
+      else if (waist <= 70 && hips <= 94) size = "S";
+      else if (waist <= 77 && hips <= 100) size = "M";
+      else if (waist <= 85 && hips <= 106) size = "L";
+      else if (waist <= 94 && hips <= 112) size = "XL";
+      else size = "XXL or above";
+
+      document.getElementById('pantyResult').innerText = `Your panty size is: ${size}`;
+    }
+
+    function calculateUnderwearSize() {
+      const hips = parseFloat(document.getElementById('underwearHipSize').value);
+
+      if (isNaN(hips)) {
+        document.getElementById('underwearResult').innerText = "Please enter your hip size.";
+        return;
+      }
+
+      const rounded = Math.round(hips / 5) * 5;
+      document.getElementById('underwearResult').innerText = `Your underwear size (based on hip) is: ${rounded} cm`;
+    }
+  </script>
+
+</body>
+</html>
