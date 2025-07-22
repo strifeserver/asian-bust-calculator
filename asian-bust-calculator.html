@@ -100,20 +100,22 @@
       }
 
       const diff = upper - under;
-      let cup = "";
-
-      if (diff < 8.75) cup = "AA";
-      else if (diff < 11.25) cup = "A";
-      else if (diff < 13.75) cup = "B";
-      else if (diff < 16.25) cup = "C";
-      else if (diff < 18.75) cup = "D";
-      else if (diff < 21.25) cup = "E";
-      else if (diff < 23.75) cup = "F";
-      else if (diff < 26.25) cup = "G";
-      else if (diff < 28.75) cup = "H";
-      else cup = "I or above";
-
       const band = Math.round(under / 5) * 5;
+
+      const cupSizes = [
+        { maxDiff: 8.75, cup: "AA" },
+        { maxDiff: 11.25, cup: "A" },
+        { maxDiff: 13.75, cup: "B" },
+        { maxDiff: 16.25, cup: "C" },
+        { maxDiff: 18.75, cup: "D" },
+        { maxDiff: 21.25, cup: "E" },
+        { maxDiff: 23.75, cup: "F" },
+        { maxDiff: 26.25, cup: "G" },
+        { maxDiff: 28.75, cup: "H" },
+      ];
+
+      const match = cupSizes.find(c => diff < c.maxDiff);
+      const cup = match ? match.cup : "I or above";
 
       document.getElementById('bustResult').innerText = `Estimated Bra Size: ${cup}${band}`;
     }
@@ -127,14 +129,16 @@
         return;
       }
 
-      let size = "";
+      const pantySizes = [
+        { waist: 63, hips: 88, size: "XS" },
+        { waist: 70, hips: 94, size: "S" },
+        { waist: 77, hips: 100, size: "M" },
+        { waist: 85, hips: 106, size: "L" },
+        { waist: 94, hips: 112, size: "XL" },
+      ];
 
-      if (waist <= 63 && hips <= 88) size = "XS";
-      else if (waist <= 70 && hips <= 94) size = "S";
-      else if (waist <= 77 && hips <= 100) size = "M";
-      else if (waist <= 85 && hips <= 106) size = "L";
-      else if (waist <= 94 && hips <= 112) size = "XL";
-      else size = "XXL or above";
+      const match = pantySizes.find(s => waist <= s.waist && hips <= s.hips);
+      const size = match ? match.size : "XXL or above";
 
       document.getElementById('pantyResult').innerText = `Your panty size is: ${size}`;
     }
@@ -150,6 +154,7 @@
       const rounded = Math.round(hips / 5) * 5;
       document.getElementById('underwearResult').innerText = `Your underwear size (based on hip) is: ${rounded} cm`;
     }
+
   </script>
 
 </body>
